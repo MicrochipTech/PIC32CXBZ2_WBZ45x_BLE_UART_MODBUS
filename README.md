@@ -32,15 +32,15 @@ Checkout the <a href="https://microchipsupport.force.com/s/" target="_blank">Tec
 
 ## 1. Introduction<a name="step1">
 
-This example application enables us to develop a request-response protocol using Modbus stack. In this application Modbus Doctor acts as the Client device and WBZ451 Curiosity Board acts as the server devices. The Modbus doctor application in the system is connected to the RS485 2 Click board and WBZ451 interface using a USB to RS485 converter.​ Thw WBZ451 Curiosity boards (server device) also acts as a BLE peripheral device and can be connected to a Mobile phone through MBD mobile application. MBD App [BLE Transparent UART] is used to display the Modbus data/logs to user via BLE.
+This example application helps us to develop a request-response protocol using Modbus stack. The Modbus Doctor acts as the client device and the WBZ451 Curiosity Board acts as the server device. The client device (Modbus Doctor application) is connected to the WBZ451 interface via the RS485 2 Click board using an USB to RS485 converter.​ The WBZ451 Curiosity board also acts as a Bluetooth(BLE) peripheral device, which helps to connect to the mobile phone through Microchip Bluetooth Data (MBD) mobile application. MBD application (BLE Transparent UART) is used to display the Modbus data/logs to user via BLE. 
 ![Setup](Docs/Setup.png)
 
 | Tip | Go through the [overview](https://onlinedocs.microchip.com/pr/GUID-A5330D3A-9F51-4A26-B71D-8503A493DF9C-en-US-2/index.html?GUID-3CC3561E-252E-43B9-BC8A-47DD108A0A46) for understanding the existing BLE application examples |
 | :- | :- |
 
-## 2. Bill of materials<a name="step2">
+## 2. Bill of Materials<a name="step2">
 
-| TOOLS | QUANTITY |
+| Tools | Quantity |
 | :- | :- |
 | [PIC32CX-BZ2 and WBZ451 Curiosity Development Board](https://www.microchip.com/en-us/development-tool/EV96B94A) | 4 |
 | [RS485 2 CLICK](https://www.mikroe.com/rs485-2-click) | 4 |
@@ -48,7 +48,7 @@ This example application enables us to develop a request-response protocol using
 
 ## 3. Hardware Setup<a name="step3">
 
-- Connect the RS485 2 click with the WBZ451 CURIOSITY BOARD using the below table.
+- Connect the RS485 2 click board with the WBZ451 Curiosity board using the connections described in the following table.  
 
 |WBZ451|E-PAPER |Description |WBZ451|E-PAPER|Description|
 | :- | :- | :- | :- |:- | :- |
@@ -61,10 +61,8 @@ This example application enables us to develop a request-response protocol using
 |3.3V|7(3.3V)|POWER SUPPLY|5V|NC|NC|
 |GND|8(GND)|GROUND|GND|9(GND)|GROUND|
 
-
-
-- Connect the USB to RS485 Converter to the system.
-- Connect the A and B lines from the USB to RS485 converter to the A and B lines of the RS485 2 click and WBZ451 Curisity board interface. To create a bus connect the RS485 2 click and WBZ451 Curisity board interface to the A and B lines in the same manner. 
+- Connect USB to RS485 converter to the system's USB port.
+- Connect the A and B lines of the USB to RS485 converter to the corresponding A and B lines of the RS485 2 click and the WBZ451 Curiosity board interface. To create a bus connect the RS485 2 click and WBZ451 Curisity board interface to the A and B lines in the same manner. 
 
 | Note: Make sure to have common GND! |
 | --- |
@@ -95,34 +93,34 @@ This example application enables us to develop a request-response protocol using
 
 ## 5. Harmony MCC Configuration<a name="step5">
 
-### Getting started with Thermostat application with WBZ451 CURIOSITY BOARD.
+### Getting Started with Modbus Server application with the WBZ451 Curiosity Board
 
 | Tip | New users of MPLAB Code Configurator are recommended to go through the [overview](https://onlineDocs.microchip.com/pr/GUID-1F7007B8-9A46-4D03-AEED-650357BA760D-en-US-6/index.html?GUID-AFAB9227-B10C-4FAE-9785-98474664B50A) |
 | :- | :- |
 
-**Step 1** - Connect the WBZ451 CURIOSITY BOARD to the device/system using a micro-USB cable.
+**Step 1** - Connect the WBZ451 curiosity board to the device/system using a micro-USB cable.
 
 **Step 2** - The project graph of the application is shown below.
 
 ![](Docs/1_project_graph.PNG)
 
-- From Device resources, go to Wireless->Drivers->BLE and select BLE STACK. Accept Dependencies or satisfiers, select "Yes".The configuration is depicted as follows.
+- From Device resources, go to Library->Harmony->Wireless->Drivers->BLE and select BLE Stack. Accept Dependencies or satisfiers, select "Yes".The configuration is depicted as follows.
 
 ![](Docs/BLE_stack.PNG)
 
 ![](Docs/BLE_stack2.PNG)
 
-- From Device resources, go to Wireless->Drivers->BLE->Profiles and select TRANSPARENT Profile. Accept Dependencies or satisfiers. The configuration is depicted as follows.
+- From Device resources, go to  Library->Harmony->Wireless->Drivers->BLE->Profiles and select TRANSPARENT Profile. Accept Dependencies or satisfiers. The configuration is depicted as follows.
 
 ![](Docs/Transparent_profile.PNG)
 
-- From Device resources, go to Wireless->Drivers->BLE-> Services and select TRANSPARENT Service. Accept Dependencies or satisfiers.
+- From Device resources, go to  Library->Harmony->Wireless->Drivers->BLE-> Services and select TRANSPARENT Service. Accept Dependencies or satisfiers.
 
-- From Device resources, go to Harmony->Peripherals->SERCOM and selct SERCOM0. Right click on the "⬦" on UART and select STDIO. The configuration is depicted as follows.
+- From Device resources, go to  Library->Harmony->Peripherals->SERCOM and selct SERCOM0. Right click on the "⬦" on UART and select STDIO. The configuration is depicted as follows.
 
 ![SERCOM0 USART](Docs/Sercom0_configuration.PNG)
 
-- From Device resources, go to Harmony->Peripherals->SERCOM and selct SERCOM1. The configuration is depicted as follows.
+- From Device resources, go to  Library->Harmony->Peripherals->SERCOM and selct SERCOM1. The configuration is depicted as follows.
 
 ![SERCOM0 USART](Docs/Sercom1_configuration.PNG)
 
