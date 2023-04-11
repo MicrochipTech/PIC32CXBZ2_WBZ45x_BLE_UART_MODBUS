@@ -89,7 +89,7 @@ This example application enables us to develop a request-response protocol using
 	    
 - Any Serial Terminal application like [TERA TERM](https://download.cnet.com/Tera-Term/3000-2094_4-75766675.html) terminal application
 
-- [MODBUS DOCTOR] (https://www.kscada.com/modbusdoctor.html)
+- [MODBUS DOCTOR](https://www.kscada.com/modbusdoctor.html)
 
 - [MPLAB X IPE v6.05](https://microchipdeveloper.com/ipe:installation)
 
@@ -196,11 +196,10 @@ Follow the steps provided in the link to [Build and program the application](htt
 
 ## 7. Run the demo<a name="step7">
 
-- After programming the board, the expected application behavior is shown in the below [video](). In this application the Modbus doctor application acts as the client device and initiates a request to write/read the registers in the server device.
+- After programming the board, the expected application behavior is shown in the below [video](). In this application the Modbus doctor acts as the client device and initiates a request to write/read the registers in the server device. When a holding register is written in the server device it is indicated by the LED in the WBZ451 server device. Whenever the client initiates a response to the server the information in the data frame is sent to the MBD app(BLE Central device) from the server devices.
 
-![Demo](Docs/HOME_THERMOSTAT.gif)
+![Demo](Docs/.gif)
 
-- The Combined Interface application can also be used instead of Alexa to create the ZigBee network.
 
 ## 8. Related applications<a name="step8">
 

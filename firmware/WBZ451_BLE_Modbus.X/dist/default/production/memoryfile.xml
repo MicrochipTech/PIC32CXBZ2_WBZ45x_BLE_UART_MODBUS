@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+  <executable name="dist/default/production/WBZ451_BLE_Modbus.X.production.elf">
+    <memory name="program">
+      <units>bytes</units>
+      <length>1032192</length>
+      <used>169341</used>
+      <free>862851</free>
+    </memory>
+    <memory name="data">
+      <units>bytes</units>
+      <length>131072</length>
+      <used>82860</used>
+      <free>48212</free>
+    </memory>
+  </executable>
+</project>
