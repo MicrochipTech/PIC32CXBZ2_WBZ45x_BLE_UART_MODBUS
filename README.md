@@ -32,10 +32,10 @@ Checkout the <a href="https://microchipsupport.force.com/s/" target="_blank">Tec
 
 ## 1. Introduction<a name="step1">
 
-This example application helps us to develop a request-response protocol using Modbus stack. The Modbus Doctor acts as the client device and the WBZ451 Curiosity Board acts as the server device. The client device (Modbus Doctor application) is connected to the WBZ451 interface via the RS485 2 Click board using an USB to RS485 converter.​ The WBZ451 Curiosity board also acts as a Bluetooth(BLE) peripheral device, which helps to connect to the mobile phone through Microchip Bluetooth Data (MBD) mobile application. MBD application (BLE Transparent UART) is used to display the Modbus data/logs to user via BLE. 
+This example application helps us to develop a request-response protocol using Modbus stack. The Modbus Doctor acts as the client device and the WBZ451 Curiosity board acts as the server device. The client device (Modbus Doctor application) is connected to the WBZ451 interface via the RS485 2 Click board using an USB to RS485 converter.​ The WBZ451 Curiosity board also acts as a Bluetooth(BLE) peripheral device, which helps to connect to the mobile phone through Microchip Bluetooth Data (MBD) mobile application. MBD application (BLE Transparent UART) is used to display the Modbus data/logs to user via BLE. 
 ![Setup](Docs/Setup.png)
 
-| Tip | Go through the [overview](https://onlinedocs.microchip.com/pr/GUID-A5330D3A-9F51-4A26-B71D-8503A493DF9C-en-US-2/index.html?GUID-3CC3561E-252E-43B9-BC8A-47DD108A0A46) for understanding the existing BLE application examples |
+| Tip | For more details about the existing BLE applications, refer to the overview section of the [PIC32CXBZ2 Application Developer's Guide](https://onlinedocs.microchip.com/pr/GUID-A5330D3A-9F51-4A26-B71D-8503A493DF9C-en-US-2/index.html?GUID-3CC3561E-252E-43B9-BC8A-47DD108A0A46)|
 | :- | :- |
 
 ## 2. Bill of Materials<a name="step2">
@@ -62,7 +62,7 @@ This example application helps us to develop a request-response protocol using M
 |GND|8(GND)|GROUND|GND|9(GND)|GROUND|
 
 - Connect USB to RS485 converter to the system's USB port.
-- Connect the A and B lines of the USB to RS485 converter to the corresponding A and B lines of the RS485 2 click and the WBZ451 Curiosity board interface. To create a bus connect the RS485 2 click and WBZ451 Curisity board interface to the A and B lines in the same manner. 
+- Connect the A and B lines of the USB to RS485 converter to the corresponding A and B lines of the RS485 2 click which is interfaced with the WBZ451 Curiosity board. To implement a bus connection, connect the A and B lines of the USB to RS485 converter across all server devices as shown in the image below. 
 
 ![Hardware Setup](Docs/HW_Setup.png)
 
@@ -100,13 +100,13 @@ This example application helps us to develop a request-response protocol using M
 | Tip | New users of MPLAB Code Configurator are recommended to go through the [overview](https://onlineDocs.microchip.com/pr/GUID-1F7007B8-9A46-4D03-AEED-650357BA760D-en-US-6/index.html?GUID-AFAB9227-B10C-4FAE-9785-98474664B50A) |
 | :- | :- |
 
-**Step 1** - Connect the WBZ451 curiosity board to the device/system using a micro-USB cable.
+**Step 1** - Connect the WBZ451 Curiosity board to the device/system using a micro-USB cable.
 
 **Step 2** - The project graph of the application is shown below.
 
 ![](Docs/1_project_graph.PNG)
 
-- From Device resources, go to Library->Harmony->Wireless->Drivers->BLE and select BLE Stack. Accept Dependencies or satisfiers, select "Yes".The configuration is depicted as follows.
+- From Device resources, go to Library->Harmony->Wireless->Drivers->BLE and select BLE Stack. Accept Dependencies or satisfiers, select "Yes" for automatic connections. Follow the configurations illustrated in the following figure. .
 
 ![](Docs/BLE_stack.PNG)
 
@@ -140,9 +140,9 @@ This example application helps us to develop a request-response protocol using M
 
 ![PIN Configuration](Docs/Pin_config.PNG)
 
-**Step 4** - [Generate](https://onlineDocs.microchip.com/pr/GUID-A5330D3A-9F51-4A26-B71D-8503A493DF9C-en-US-1/index.html?GUID-9C28F407-4879-4174-9963-2CF34161398E) the code.
+**Step 4** - [Generate](https://onlinedocs.microchip.com/pr/GUID-1F7007B8-9A46-4D03-AEED-650357BA760D-en-US-6/index.html?GUID-2EE03524-41FE-4EBA-8646-6D10AA72F365) the code.
 
-**Step 5** - Copy the "modbus" and "port" folder by navigating to the following path: "../firmware/src/" and paste it under source files in your project folder (...\firmware\src).
+**Step 5** - From the downloaded .zip file copy the "modbus" and "port" folder by navigating to the following path: "../firmware/src/" and paste it under source files in your project folder (...\firmware\src).
 
 | Note | This application repository should be cloned/downloaded to perform the following steps. |
 | :- | :- |
@@ -168,7 +168,7 @@ This example application helps us to develop a request-response protocol using M
 
 **Step 8** - Clean and build the project. To run the project, select "Make and program device" button.
 
-**Step 9** - The Modbus doctor settings are shown below.
+**Step 9** - The Modbus Doctor settings are shown below.
 
 ![Modbus doctor](Docs/doctor_settings.png)
 
@@ -184,15 +184,14 @@ This example application helps us to develop a request-response protocol using M
 
 **Step 10** - The Modbus doctor initiates a request to write/read the server device's holding register and read the server device's input register.
 
-- Holding regiter start address: 1 (Maximum Length:32)
+- Holding register start address: 1 (Maximum Length:32)
 - Input register start address: 1000(Maximum Length:64)
 - The Server address, Register address, Length and Type of register should be updated in the below section in Modbus doctor application.
 
 ![Modbus doctor1](Docs/doctor_settings1.PNG)
 
-### Programming the Server devices
+### Programming multiple Server devices
 
-- The Modbus Server application is available in this [link](https://github.com/MicrochipTech/PIC32CXBZ2_WBZ45x_BLE_UART_MODBUS). Follow the steps provided to program more than one server device.
 - In "app.c" file, change the SERVER_ADDRESS macro to a unique address before programming each server device as shown below.
 
 ![Server_address](Docs/Server_address.PNG)
@@ -218,7 +217,7 @@ Follow the steps provided in the link to [Build and program the application](htt
 
 - After programming the board, the expected application behavior is shown in the below [video](). 
 
-![Demo](Docs/.gif)
+![Demo](Docs/mobus.gif)
 
 - In this application the Modbus doctor acts as the client device and initiates a request to write/read the registers in the server device. When a holding register is written in the server device it is indicated by the LED in the WBZ451 server device. 
 - Whenever the client initiates a request to the server device, the information in the data frame is sent to the MBD app(BLE Central device) from the server devices as shown in the video.
