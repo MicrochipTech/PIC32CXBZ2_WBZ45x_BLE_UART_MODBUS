@@ -44,7 +44,7 @@ This example application helps us to develop a request-response protocol using M
 | :- | :- |
 | [PIC32CX-BZ2 and WBZ451 Curiosity Development Board](https://www.microchip.com/en-us/development-tool/EV96B94A) | 4 |
 | [RS485 2 CLICK](https://www.mikroe.com/rs485-2-click) | 4 |
-| [USB tO RS485 Converter] | 1 |
+| [USB to RS485 Converter](https://www.google.com/search?q=SpiffySky+USB+to+RS-485+Converter+Adapter+with+CH+340%2F341+Chipset+Supports+All+Windows+Version&rlz=1C1GCEA_enIN1017IN1017&oq=SpiffySky+USB+to+RS-485+Converter+Adapter+with+CH+340%2F341+Chipset+Supports+All+Windows+Version&aqs=chrome..69i57j69i60.232j0j1&sourceid=chrome&ie=UTF-8) | 1 |
 
 ## 3. Hardware Setup<a name="step3">
 
@@ -128,6 +128,8 @@ This example application helps us to develop a request-response protocol using M
 
 - Select Wolfcrypt library and make sure that "Support random number generation" box is unchecked as shown below.
 
+![Wolfcrypt_library](Docs/Wolfcrypt_library.PNG)
+
 - From Device resources, go to System services and select TIME. Right click on the "⬦" on the instance and select TC0.
 
 - The SYSTEM configuration is depicted as follows.
@@ -177,7 +179,7 @@ This example application helps us to develop a request-response protocol using M
 - Stop bits: 1
 - Com port: COM USB serial port(CH340)
 
-| Note | To connect the system to the USB to RS485 converter we will be needind CH340 driver|
+| Note | To connect the system to the USB to RS485 converter, install CH340 driver|
 | :- | :- |
 
 **Step 10** - The Modbus doctor initiates a request to write/read the server device's holding register and read the server device's input register.
@@ -208,15 +210,18 @@ Follow the steps provided in the link to [program the precompiled hex file](http
 
 The application folder can be found by navigating to the following path: 
 
-- ""
+- ".../PIC32CXBZ2_WBZ45x_BLE_UART_MODBUS/firmware/"
 
 Follow the steps provided in the link to [Build and program the application](https://github.com/Microchip-MPLAB-Harmony/wireless_apps_pic32cxbz2_wbz45/tree/master/apps/ble/advanced_applications/ble_sensor#build-and-program-the-application-guid-3d55fb8a-5995-439d-bcd6-deae7e8e78ad-section).
 
 ## 7. Run the demo<a name="step7">
 
-- After programming the board, the expected application behavior is shown in the below [video](). In this application the Modbus doctor acts as the client device and initiates a request to write/read the registers in the server device. When a holding register is written in the server device it is indicated by the LED in the WBZ451 server device. Whenever the client initiates a response to the server the information in the data frame is sent to the MBD app(BLE Central device) from the server devices.
+- After programming the board, the expected application behavior is shown in the below [video](). 
 
 ![Demo](Docs/.gif)
+
+- In this application the Modbus doctor acts as the client device and initiates a request to write/read the registers in the server device. When a holding register is written in the server device it is indicated by the LED in the WBZ451 server device. 
+- Whenever the client initiates a request to the server device, the information in the data frame is sent to the MBD app(BLE Central device) from the server devices as shown in the video.
 
 
 ## 8. Related applications<a name="step8">
