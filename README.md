@@ -64,6 +64,8 @@ This example application helps us to develop a request-response protocol using M
 - Connect USB to RS485 converter to the system's USB port.
 - Connect the A and B lines of the USB to RS485 converter to the corresponding A and B lines of the RS485 2 click and the WBZ451 Curiosity board interface. To create a bus connect the RS485 2 click and WBZ451 Curisity board interface to the A and B lines in the same manner. 
 
+![Hardware Setup](Docs/HW_Setup.png)
+
 | Note: Make sure to have common GND! |
 | --- |
 
@@ -140,9 +142,14 @@ This example application helps us to develop a request-response protocol using M
 
 **Step 5** - Copy the "modbus" and "port" folder by navigating to the following path: "../firmware/src/" and paste it under source files in your project folder (...\firmware\src).
 
-- In Projects section, right click on Source files to add the ".c" file and Header files to add the ".h" file.
+| Note | This application repository should be cloned/downloaded to perform the following steps. |
+| :- | :- |
+| Path | The application folder can be found in the following [link](https://github.com/MicrochipTech/PIC32CXBZ2_WBZ45x_BLE_UART_MODBUS) |
+
+#### To add the folder to your MPLAB project
+- In Projects section, right click on Source files to add the ".c" file and right click on Header files to add the ".h" file.
 - Select "Add existing items from folder".
-- Select Add and browse the location of "app_temphum13" folder (...\firmware\src).
+- Select Add and browse the location of the folder (...\firmware\src).
 - Make sure the "Files of type" is "C Source files" while adding ".c" files and "Header files" while adding ".h" files.
 - Select the folder and click "add".
 
@@ -152,10 +159,6 @@ This example application helps us to develop a request-response protocol using M
 
 **Step 7** - Replace the app.c, app.h files and app_ble folder.
 
-| Note | This application repository should be cloned/downloaded to perform the following steps. |
-| :- | :- |
-| Path | The application folder can be found in the following [link]() |
-
 - Copy the "app.c" and "app.h" files by navigating to the following path: "../firmware/src/"
 - Paste the files under source files in your project folder (...\firmware\src).
 - Copy the "app_ble" folder by navigating to the following path: (...\firmware\src)
@@ -163,11 +166,28 @@ This example application helps us to develop a request-response protocol using M
 
 **Step 8** - Clean and build the project. To run the project, select "Make and program device" button.
 
-**Step 9** - The data is printed onto the tera term and E-Paper display.
+**Step 9** - The Modbus doctor settings are shown below.
 
-- Baud rate: 115200
-- Com port: COM USB serial port
-	
+![Modbus doctor](Docs/doctor_settings.png)
+
+- Mode: RTU
+- Baud rate: 9600
+- Parity: None
+- Data bits: 8
+- Stop bits: 1
+- Com port: COM USB serial port(CH340)
+
+| Note | To connect the system to the USB to RS485 converter we will be needind CH340 driver|
+| :- | :- |
+
+**Step 10** - The Modbus doctor initiates a request to write/read the server device's holding register and read the server device's input register.
+
+- Holding regiter start address: 1 (Maximum Length:32)
+- Input register start address: 1000(Maximum Length:64)
+- The Server address, Register address, Length and Type of register should be updated in the below section in Modbus doctor application.
+
+![Modbus doctor1](Docs/doctor_settings1.PNG)
+
 ### Programming the Server devices
 
 - The Modbus Server application is available in this [link](https://github.com/MicrochipTech/PIC32CXBZ2_WBZ45x_BLE_UART_MODBUS). Follow the steps provided to program more than one server device.
