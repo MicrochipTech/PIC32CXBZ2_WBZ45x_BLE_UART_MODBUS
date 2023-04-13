@@ -203,25 +203,12 @@ void APP_BleConfigBasic()
     BLE_GAP_AdvParams_T             advParam;
     uint8_t advData[]={0x02, 0x01, 0x04, 0x05, 0x16, 0xDA, 0xFE, 0xFF, 0x01};
     BLE_GAP_AdvDataParams_T         appAdvData;
-    uint8_t scanRspData[]={0x0F, 0x09, 0x57, 0x42, 0x5A, 0x34, 0x35, 0x31, 0x5F, 0x4D, 0x4F, 0x44, 0x42, 0x55, 0x53, 0x34};
+    uint8_t scanRspData[]={0x0F, 0x09, 0x57, 0x42, 0x5A, 0x34, 0x35, 0x31, 0x5F, 0x4D, 0x4F, 0x44, 0x42, 0x55, 0x53, 0x31};
     BLE_GAP_AdvDataParams_T         appScanRspData;
 
     // Configure advertising parameters
     BLE_GAP_SetAdvTxPowerLevel(9,&advTxPower);      /* Advertising TX Power */
     
-    BLE_GAP_Addr_T devAddr;
-    if (!IB_GetBdAddr(&devAddr.addr[0]) )
-    {
-        devAddr.addrType = BLE_GAP_ADDR_TYPE_PUBLIC;
-        devAddr.addr[0] = rand();       //0x18;
-        devAddr.addr[1] = rand();       //0x32;
-        devAddr.addr[2] = rand();       //0x78;
-        devAddr.addr[3] = rand();
-        devAddr.addr[4] = 0xB7;
-        devAddr.addr[5] = 0xC8;
-        // Configure device address
-        BLE_GAP_SetDeviceAddr(&devAddr);
-    }
     memset(&advParam, 0, sizeof(BLE_GAP_AdvParams_T));
     advParam.intervalMin = 1600;     /* Advertising Interval Min */
     advParam.intervalMax = 1600;     /* Advertising Interval Max */

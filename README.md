@@ -178,6 +178,7 @@ This example application helps us to develop a request-response protocol using M
 - Data bits: 8
 - Stop bits: 1
 - Com port: COM USB serial port(CH340)
+- Once the settings are done, give "Connection". Once the connection is established, "Status: Connected" message will be shown.
 
 | Note | To connect the system to the USB to RS485 converter, install CH340 driver|
 | :- | :- |
@@ -194,7 +195,11 @@ This example application helps us to develop a request-response protocol using M
 
 - In "app.c" file, change the SERVER_ADDRESS macro to a unique address before programming each server device as shown below.
 
-![Server_address](Docs/Server_address.PNG)
+![Server address](Docs/Server_address.PNG)
+
+- In "app_ble.c", change the last hex value of the "scanRspData[]" array to have a unique BLE scan response data.
+
+![BLE data](Docs/ble_data.PNG)
 
 ## 6. Board Programming<a name="step6">
 
@@ -215,12 +220,13 @@ Follow the steps provided in the link to [Build and program the application](htt
 
 ## 7. Run the demo<a name="step7">
 
-- After programming the board, the expected application behavior is shown in the below [video](). 
+- After programming the board, the expected application behavior is shown in the below video. 
 
 ![Demo](Docs/mobus.gif)
 
 - In this application the Modbus doctor acts as the client device and initiates a request to write/read the registers in the server device. When a holding register is written in the server device it is indicated by the LED in the WBZ451 server device. 
-- Whenever the client initiates a request to the server device, the information in the data frame is sent to the MBD app(BLE Central device) from the server devices as shown in the video.
+- The server device(BLE Peripheral) is connected to the MBD app(BLE Central) through BLE and the User LED indicates the BLE connection.
+- Whenever the client initiates a request to the server device, the information in the data frame is sent to the MBD app(BLE Central device) from the server devices as shown in the above video.
 
 
 ## 8. Related applications<a name="step8">

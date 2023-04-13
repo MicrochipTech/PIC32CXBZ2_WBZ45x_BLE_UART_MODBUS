@@ -69,7 +69,7 @@
 #define REG_HOLDING_NREGS               ( 32 )
 #define COIL_NREGS                      ( 8 )
 #define MB_SERIAL_PDU_SIZE_MAX     256
-#define SERVER_ADDRESS    0x04
+#define SERVER_ADDRESS    0x01
 // *****************************************************************************
 // *****************************************************************************
 // Section: Global Data Definitions
@@ -464,7 +464,6 @@ eMBRegCoilsCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNCoils,
             while( usNCoils > 0 )
             {
                 usCoilBuf[iRegIndex] = *pucRegBuffer;
-//                usCoilBuf[iRegIndex] |= *pucRegBuffer++;
                 printf("\r\n usCoilBuf[%d]: %d\r\n",iRegIndex,usRegHoldingBuf[iRegIndex]);
                 if((usRegHoldingBuf[iRegIndex])>0)
                 {
