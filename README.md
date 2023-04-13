@@ -33,6 +33,7 @@ Checkout the <a href="https://microchipsupport.force.com/s/" target="_blank">Tec
 ## 1. Introduction<a name="step1">
 
 This example application helps us to develop a request-response protocol using Modbus stack. The Modbus Doctor acts as the client device and the WBZ451 Curiosity board acts as the server device. The client device (Modbus Doctor application) is connected to the WBZ451 interface via the RS485 2 Click board using an USB to RS485 converter.​ The WBZ451 Curiosity board also acts as a Bluetooth(BLE) peripheral device, which helps to connect to the mobile phone through Microchip Bluetooth Data (MBD) mobile application. MBD application (BLE Transparent UART) is used to display the Modbus data/logs to user via BLE. 
+
 ![Setup](Docs/Setup.png)
 
 | Tip | For more details about the existing BLE applications, refer to the overview section of the [PIC32CXBZ2 Application Developer's Guide](https://onlinedocs.microchip.com/pr/GUID-A5330D3A-9F51-4A26-B71D-8503A493DF9C-en-US-2/index.html?GUID-3CC3561E-252E-43B9-BC8A-47DD108A0A46)|
@@ -224,9 +225,10 @@ Follow the steps provided in the link to [Build and program the application](htt
 
 ![Demo](Docs/mobus.gif)
 
-- In this application the Modbus doctor acts as the client device and initiates a request to write/read the registers in the server device. When a holding register is written in the server device it is indicated by the LED in the WBZ451 server device. 
+- In this application the Modbus doctor acts as the client device and initiates a request to write/read the registers in the server device. When a holding register is written in the server device and value is greater than zero it is indicated by the LED in the WBZ451 server device. 
 - The server device(BLE Peripheral) is connected to the MBD app(BLE Central) through BLE and the User LED indicates the BLE connection.
 - Whenever the client initiates a request to the server device, the information in the data frame is sent to the MBD app(BLE Central device) from the server devices as shown in the above video.
+- As shown in the video, by changing the server address the client can write/read the server device.
 
 
 ## 8. Related applications<a name="step8">
