@@ -61,7 +61,7 @@ The Modbus Doctor acts as the client device and the WBZ451 Curiosity board acts 
 
 - Connect the RS485 2 click board with the WBZ451 Curiosity board using the connections described in the following table.  
 
-|WBZ451|E-PAPER |Description |WBZ451|E-PAPER|Description|
+|WBZ451|RS485 2 CLICK|Description |WBZ451|RS485 2 CLICK|Description|
 | :- | :- | :- | :- |:- | :- |
 |AN|NC|NC|PWM|RE|Receiver Enable|
 |RST|NC|NC|INT|NC|NC|
