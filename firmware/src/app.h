@@ -75,6 +75,14 @@ extern "C" {
 #define BLE_DATA_LEN                    0u
 #define BLE_DATA                          01u
 #define DISP_DATA_OFFSET     02u
+    
+    
+//To program as a Client device    
+//#define RTU_CLIENT 
+//To program as a Server device
+#define RTU_SERVER 
+    
+    
 // *****************************************************************************
 /* Application states
 

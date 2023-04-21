@@ -222,6 +222,7 @@ eMBFuncReadHoldingRegister( UCHAR * pucFrame, USHORT * usLen )
     {
         /* Can't be a valid request because the length is incorrect. */
         eStatus = MB_EX_ILLEGAL_DATA_VALUE;
+        
     }
     return eStatus;
 }

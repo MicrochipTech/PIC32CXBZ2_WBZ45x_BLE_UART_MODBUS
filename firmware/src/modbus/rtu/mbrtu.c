@@ -38,7 +38,7 @@
 #include "modbus/include/mb.h"
 #include "modbus/rtu/mbrtu.h"
 #include "modbus/include/mbframe.h"
-
+#include "ble_trsps/ble_trsps.h"
 #include "modbus/rtu/mbcrc.h"
 #include "modbus/include/mbport.h"
 #include <assert.h>
@@ -48,7 +48,9 @@
 #define MB_SER_PDU_SIZE_CRC     2       /*!< Size of CRC field in PDU. */
 #define MB_SER_PDU_ADDR_OFF     0       /*!< Offset of SERVER address in Ser-PDU. */
 #define MB_SER_PDU_PDU_OFF      1       /*!< Offset of Modbus-PDU in Ser-PDU. */
-
+extern uint16_t conn_hdl; 
+char buffer[50];
+int j=0;
 /* ----------------------- Type definitions ---------------------------------*/
 typedef enum
 {
@@ -86,7 +88,7 @@ eMBRTUInit( UCHAR ucServerAddress, UCHAR ucPort, ULONG ulBaudRate, eMBParity ePa
     ENTER_CRITICAL_SECTION(  );
 
     /* Modbus RTU uses 8 Databits. */
-    if( xMBPortSerialInit( ucPort, ulBaudRate, 8, eParity ) != TRUE )
+    if( xMBPortSerialInit( ucPort, ulBaudRate, SERCOM_USART_INT_CTRLB_CHSIZE_8_BIT, eParity ) != TRUE )
     {
         eStatus = MB_EPORTERR;
     }
@@ -206,10 +208,8 @@ eMBRTUSend( UCHAR ucServerAddress, const UCHAR * pucFrame, USHORT usLength )
 
         /* Calculate CRC16 checksum for Modbus-Serial-Line-PDU. */
         usCRC16 = usMBCRC16( ( UCHAR * ) pucSndBufferCur, usSndBufferCount );
-        pucSndBufferCur[usSndBufferCount++] = ( UCHAR )( usCRC16 & 0xFF );  //roopi
-        pucSndBufferCur[usSndBufferCount++] = ( UCHAR )( usCRC16 >> 8 );    //roopi
-//        ucRTUBuf[usSndBufferCount++] = ( UCHAR )( usCRC16 & 0xFF );
-//        ucRTUBuf[usSndBufferCount++] = ( UCHAR )( usCRC16 >> 8 );
+        pucSndBufferCur[usSndBufferCount++] = ( UCHAR )( usCRC16 & 0xFF );  
+        pucSndBufferCur[usSndBufferCount++] = ( UCHAR )( usCRC16 >> 8 );   
 
         /* Activate the transmitter. */
         eSndState = STATE_TX_XMIT;
@@ -230,7 +230,6 @@ xMBRTUReceiveFSM( void )
 {
     BOOL            xTaskNeedSwitch = FALSE;
     UCHAR           ucByte;
-
     assert( eSndState == STATE_TX_IDLE );
 
     /* Always read the character. */
@@ -260,7 +259,6 @@ xMBRTUReceiveFSM( void )
         usRcvBufferPos = 0;
         ucRTUBuf[usRcvBufferPos++] = ucByte;
         eRcvState = STATE_RX_RCV;
-
         /* Enable t3.5 timers. */
         vMBPortTimersEnable(  );
         break;

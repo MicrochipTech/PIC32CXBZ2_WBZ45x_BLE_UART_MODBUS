@@ -32,7 +32,17 @@ Checkout the <a href="https://microchipsupport.force.com/s/" target="_blank">Tec
 
 ## 1. Introduction<a name="step1">
 
-This example application helps us to develop a request-response protocol using Modbus stack. The Modbus Doctor acts as the client device and the WBZ451 Curiosity board acts as the server device. The client device (Modbus Doctor application) is connected to the WBZ451 interface via the RS485 2 Click board using an USB to RS485 converter.​ The WBZ451 Curiosity board also acts as a Bluetooth(BLE) peripheral device, which helps to connect to the mobile phone through Microchip Bluetooth Data (MBD) mobile application. MBD application (BLE Transparent UART) is used to display the Modbus data/logs to user via BLE. 
+This example application helps us to develop a request-response protocol using Modbus protocol. The  WBZ451 Curiosity board acts as a client device or server device along with the RS485 2 click board. The RS485 communication with MODBUS protocol is mostly used over industrial sector for its highlighting features like balanced line communication, multi-drop facility, good noise immunity, and maximum data transmission speed. The MODBUS protocol with RS485 physical line makes transactions with multi-server easy and error free.
+
+### WBZ451 curiosity board as Client Device
+
+The  WBZ451 Curiosity board acts as client device or server device. The WBZ451 client device is connected to the WBZ451 server devices through RS485 2 Click board as shown below.​ The WBZ451 Client and server devices act as a Bluetooth(BLE) peripheral device, which helps to connect to the mobile phone through Microchip Bluetooth Data (MBD) mobile application.  On the Client side, the MBD application (BLE Transparent UART) is used to send Modbus commands respective to the WBZ451 Server devices. On the Server side, it is used to display the Modbus data/logs to user via BLE.
+
+![Setup](Docs/Setup2.png)
+
+### MODBUS Doctor as Client Device
+
+The Modbus Doctor acts as the client device and the WBZ451 Curiosity board acts as the server device. The client device (Modbus Doctor application) is connected to the WBZ451 interface via the RS485 2 Click board using an USB to RS485 converter.​ The WBZ451 Curiosity board also acts as a Bluetooth(BLE) peripheral device, which helps to connect to the mobile phone through Microchip Bluetooth Data (MBD) mobile application. MBD application (BLE Transparent UART) is used to display the Modbus data/logs to user via BLE. 
 
 ![Setup](Docs/Setup.png)
 
@@ -62,10 +72,16 @@ This example application helps us to develop a request-response protocol using M
 |3.3V|7(3.3V)|POWER SUPPLY|5V|NC|NC|
 |GND|8(GND)|GROUND|GND|9(GND)|GROUND|
 
+#### To connect to the Modbus Doctor application
+
 - Connect USB to RS485 converter to the system's USB port.
 - Connect the A and B lines of the USB to RS485 converter to the corresponding A and B lines of the RS485 2 click which is interfaced with the WBZ451 Curiosity board. To implement a bus connection, connect the A and B lines of the USB to RS485 converter across all server devices as shown in the image below. 
 
 ![Hardware Setup](Docs/HW_Setup.png)
+
+#### To connect to the WBZ451 Client device
+
+- Connect the A and B lines of the RS485 2 click of the client device to the corresponding A and B lines of the server devices as shown below.
 
 | Note: Make sure to have common GND! |
 | --- |
@@ -169,6 +185,8 @@ This example application helps us to develop a request-response protocol using M
 
 **Step 8** - Clean and build the project. To run the project, select "Make and program device" button.
 
+### MODBUS Doctor as Client Device
+
 **Step 9** - The Modbus Doctor settings are shown below.
 
 ![Modbus doctor](Docs/doctor_settings.png)
@@ -192,7 +210,37 @@ This example application helps us to develop a request-response protocol using M
 
 ![Modbus doctor1](Docs/doctor_settings1.PNG)
 
-### Programming multiple Server devices
+### WBZ451 Curiosity board as Client Device
+
+- In "app.h" file, uncomment the RTU_CLIENT macro and comment RTU_SERVER macro before programming to program a client device as shown below.
+
+![Server address](Docs/Client_macro.PNG)
+
+- Connect the WBZ451 Client device to a mobile phone using MBD app.
+- After connecting, send the corresponding modbus data  in the frame format given below to the WBZ451 Client device from MBD app.
+
+|Server Address|Function Code|Register Address|Data|
+| :- | :- | :- | :- |
+
+- The scope of this application covers the below mentioned function codes.
+
+|Type|Mode|Function Code|
+| :- | :- | :- |
+|Coil|Read|0x01|		 	 
+|Coil|Write	Single Coil|0x05|		 	 	 
+|Coil|Write	Multiple Coil|0x0F|	 	 
+|Holding register|Read|0x03|	 	 	 	 
+|Holding register|Write	Single register|0x06|	 	 	 
+|Holding register|Write Multiple register|0x10|
+|Input register|Read|0x04|	
+
+- The Client device calculates the CRC and initiates a request to write/read the server device's coil, holding register and read the server device's input register. 
+
+### Programming Server devices
+
+- In "app.h" file, uncomment the RTU_SERVER macro value and comment the RTU_CLIENT macro before programming, to program a server device as shown below.
+
+![Server address](Docs/Server_macro.PNG)
 
 - In "app.c" file, change the SERVER_ADDRESS macro to a unique address before programming each server device as shown below.
 
@@ -221,6 +269,8 @@ Follow the steps provided in the link to [Build and program the application](htt
 
 ## 7. Run the demo<a name="step7">
 
+### Modbus Doctor as Client device
+
 - After programming the board, the expected application behavior is shown in the below video. 
 
 ![Demo](Docs/mobus.gif)
@@ -230,6 +280,14 @@ Follow the steps provided in the link to [Build and program the application](htt
 - Whenever the client initiates a request to the server device, the information in the data frame is sent to the MBD app(BLE Central device) from the server devices as shown in the above video.
 - As shown in the video, by changing the server address the client can write/read the server device.
 
+### WBZ451 curiosity board as Client device
+
+- After programming the board, the expected application behavior is shown in the below video. 
+
+![Demo](Docs/mobus_bridge.gif)
+
+- In this application the Modbus frame is sent to the Client device from the MBD app through BLE UART and the Client device adds the CRC and intiates a request to the server devices. 
+- The server devices sends the response for the request to the client device.
 
 ## 8. Related applications<a name="step8">
 

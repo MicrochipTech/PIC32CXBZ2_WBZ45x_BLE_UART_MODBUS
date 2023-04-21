@@ -34,5 +34,5 @@ MP_CPPC_DIR="C:\Program Files\Microchip\xc32\v4.10\bin"
 MP_AS_DIR="C:\Program Files\Microchip\xc32\v4.10\bin"
 MP_LD_DIR="C:\Program Files\Microchip\xc32\v4.10\bin"
 MP_AR_DIR="C:\Program Files\Microchip\xc32\v4.10\bin"
-DFP_DIR=C:/Users/I70842/.mchp_packs/Microchip/PIC32CX-BZ_DFP/1.1.116
 CMSIS_DIR=C:/Users/I70842/.mchp_packs/ARM/CMSIS/5.8.0
+DFP_DIR=C:/Users/I70842/.mchp_packs/Microchip/PIC32CX-BZ_DFP/1.1.116

@@ -117,7 +117,7 @@ xMBPortSerialInit( UCHAR ucPORT, ULONG ulBaudRate, UCHAR ucDataBits, eMBParity e
     BOOL    bStatus = false;
     
     usart_setup.baudRate = ulBaudRate;
-    usart_setup.dataWidth = SERCOM_USART_INT_CTRLB_CHSIZE_8_BIT; 
+    usart_setup.dataWidth = ucDataBits;              //SERCOM_USART_INT_CTRLB_CHSIZE_8_BIT; 
     usart_setup.parity = USART_PARITY_NONE;
     usart_setup.stopBits = USART_STOP_1_BIT;
     

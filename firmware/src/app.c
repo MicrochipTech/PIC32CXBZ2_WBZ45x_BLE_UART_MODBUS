@@ -69,7 +69,7 @@
 #define REG_HOLDING_NREGS               ( 32 )
 #define COIL_NREGS                      ( 8 )
 #define MB_SERIAL_PDU_SIZE_MAX     256
-#define SERVER_ADDRESS    0x01
+#define SERVER_ADDRESS    0x03
 // *****************************************************************************
 // *****************************************************************************
 // Section: Global Data Definitions
@@ -99,12 +99,13 @@ static USHORT   usRegHoldingStart = REG_HOLDING_START;
 static USHORT   usRegHoldingBuf[REG_HOLDING_NREGS];
 static USHORT   usCoilBuf[REG_HOLDING_NREGS];
 uint16_t conn_hdl; 
+static UCHAR  mbRTUFrame[MB_SERIAL_PDU_SIZE_MAX];
 // *****************************************************************************
 // *****************************************************************************
 // Section: Application Callback Functions
 // *****************************************************************************
 // *****************************************************************************
-
+UCHAR    modbusAddress;
 /* TODO:  Add any necessary callback functions.
 */
 
@@ -117,7 +118,7 @@ uint16_t conn_hdl;
 
 /* TODO:  Add any necessary local functions.
 */
-
+#ifdef RTU_CLIENT
 uint8_t asciiNum_to_hex(uint8_t ascii_val)
 {
     uint8_t hex_val = 0xFF;
@@ -140,22 +141,29 @@ uint8_t asciiNum_to_hex(uint8_t ascii_val)
     return hex_val;
 }
 
-#ifdef RTU_CLIENT
+void writeHoldingReg(UCHAR mbAddress,UCHAR mbLength )
+{
+    modbusAddress=mbAddress;
+    eMBRTUSend( mbAddress,(const UCHAR *) &mbRTUFrame[1], mbLength );
+}
+
+
+
 void BLEtoModbusData(uint8_t * buffer,int len)
 {
     int count=0;
+    char temp_buffer[50];
     for(int i=0;i<len;i+=2)
     {
-        buffer[i]=asciiNum_to_hex(buffer[i]);
-        buffer[i+1]=asciiNum_to_hex(buffer[i+1]);
-        mbRTUFrame[count]=(buffer[i]<<4)|(buffer[i+1]);
-        printf("\r\n\t%x",mbRTUFrame[count]);
+        temp_buffer[i]=asciiNum_to_hex(buffer[i]);
+        temp_buffer[i+1]=asciiNum_to_hex(buffer[i+1]);
+        mbRTUFrame[count]=(temp_buffer[i]<<4)|(temp_buffer[i+1]);
+        printf("\r\n%x",mbRTUFrame[count]);
         count++;
     }
     writeHoldingReg(mbRTUFrame[0],count-1);
 }
 #endif
-
 
 // *****************************************************************************
 // *****************************************************************************
@@ -199,7 +207,7 @@ void APP_Tasks ( void )
     APP_Msg_T   *p_appMsg;
     p_appMsg=appMsg;
     eMBErrorCode eMBstatus;
-    const UCHAR     ucServerID[] = { 0xAA, 0xBB, 0xCC };
+    
 
     /* Check the application's current state. */
     switch ( appData.state )
@@ -212,14 +220,22 @@ void APP_Tasks ( void )
             RTC_Timer32Start();
             BLE_GAP_SetAdvEnable(0x01, 0);
             printf("[BLE] Started Advertising!!!\r\n");
+#ifdef RTU_CLIENT
+            eMBstatus = eMBInit( MB_RTU, 0x00 , 1, 9600, MB_PAR_NONE );     
+#else
             eMBstatus = eMBInit( MB_RTU, SERVER_ADDRESS , 1, 9600, MB_PAR_NONE );
+#endif
             if(eMBstatus != MB_ENOERR)
             {
                 printf("[Error] eMBInit\r\n");
             }
             else
             {
-                eMBstatus = eMBSetServerID( 0x34, TRUE, ucServerID, 3 );
+                
+#ifdef RTU_SERVER
+            const UCHAR     ucServerID[] = { 0xAA, 0xBB, 0xCC };
+            eMBstatus = eMBSetServerID( 0x34, TRUE, ucServerID, 3 );
+#endif
                 if(eMBstatus != MB_ENOERR)
                 {
                     printf("[Error] eMBSetServerID\r\n");
@@ -279,7 +295,7 @@ void APP_Tasks ( void )
                 {
                    SERCOM0_USART_Write((uint8_t *)"\r\n\t[BLE Data]",13);
                    SERCOM0_USART_Write((uint8_t *)&p_appMsg->msgData[BLE_DATA],appMsg->msgData[BLE_DATA_LEN]);
-#ifdef RTU_CLIENT
+#if RTU_CLIENT>0
                    BLEtoModbusData((uint8_t *)&p_appMsg->msgData[BLE_DATA],appMsg->msgData[BLE_DATA_LEN]);
 #endif
                 }
@@ -454,18 +470,18 @@ eMBRegCoilsCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNCoils,
         case MB_REG_WRITE:
             if(usNCoils>1)
             {
-                func_code=0x16;
+                func_code=0x0F;
             }
             else
             {
-                func_code=0x06;
+                func_code=0x05;
             }
             sprintf(buffer1,"Function code:0x%x \r\n\tNo of Regs: %d\r\n\tMode: WRITE\r\n", func_code, usNCoils);
             while( usNCoils > 0 )
             {
                 usCoilBuf[iRegIndex] = *pucRegBuffer;
-                printf("\r\n usCoilBuf[%d]: %d\r\n",iRegIndex,usRegHoldingBuf[iRegIndex]);
-                if((usRegHoldingBuf[iRegIndex])>0)
+                printf("\r\n usCoilBuf[%d]: %d\r\n",iRegIndex,(int)usCoilBuf[iRegIndex]);
+                if((usCoilBuf[iRegIndex])>0)
                 {
                     sprintf(buffer2,"Relay %d: On",(int)iRegIndex);
                     BLE_TRSPS_SendData(conn_hdl,strlen(buffer2),(uint8_t *)&buffer2);

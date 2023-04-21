@@ -57,12 +57,16 @@
 #endif
 
 /* ----------------------- Static variables ---------------------------------*/
-
+extern UCHAR    modbusAddress;
 static UCHAR    ucMBAddress;
 static eMBMode  eMBCurrentMode;
 BOOL            xNeedPoll = FALSE;
 extern uint16_t conn_hdl; 
-    
+ 
+#define HOLDING_READ_REG (0x03)
+#define INPUT_READ_REG (0x04)
+#define COIL_READ_REG 0x01
+
 static enum
 {
     STATE_ENABLED,
@@ -128,19 +132,18 @@ static xMBFunctionHandler xFuncHandlers[MB_FUNC_HANDLERS_MAX] = {
 
 /* ----------------------- Start implementation -----------------------------*/
 eMBErrorCode
-eMBInit( eMBMode eMode, UCHAR ucServerAddress, UCHAR ucPort, ULONG ulBaudRate, eMBParity eParity )
+eMBInit( eMBMode eMode, UCHAR ucAddress, UCHAR ucPort, ULONG ulBaudRate, eMBParity eParity )
 {
     eMBErrorCode    eStatus = MB_ENOERR;
 
     /* check preconditions */
-    if( ( ucServerAddress == MB_ADDRESS_BROADCAST ) ||
-        ( ucServerAddress < MB_ADDRESS_MIN ) || ( ucServerAddress > MB_ADDRESS_MAX ) )
+    if( ( ucAddress < MB_ADDRESS_MIN ) || ( ucAddress > MB_ADDRESS_MAX ) )
     {
         eStatus = MB_EINVAL;
     }
     else
     {
-        ucMBAddress = ucServerAddress;
+        ucMBAddress = ucAddress;
 
         switch ( eMode )
         {
@@ -337,7 +340,8 @@ eMBPoll( void )
     static UCHAR    ucFunctionCode;
     static USHORT   usLength;
     static eMBException eException;
-    int             i;
+    int             i,Nregs;
+    char buffer2[50];
     eMBErrorCode    eStatus = MB_ENOERR;
     eMBEventType    eEvent;
 
@@ -365,6 +369,20 @@ eMBPoll( void )
                 {
                     ( void )xMBPortEventPost( EV_EXECUTE );
                 }
+                else if(ucRcvAddress == modbusAddress)
+                {
+                    char buffer[50];
+                    printf("\r\n Response received\r\n");
+                    sprintf(buffer,"[Modbus] Response received\r\n");
+                    BLE_TRSPS_SendData(conn_hdl,strlen(buffer),(uint8_t *)&buffer);
+                    ( void )xMBPortEventPost( EV_EXECUTE );
+                }
+                else
+                {
+                    char buffer[50];
+                    sprintf(buffer,"[Modbus] Error Occured: Illegal Data");
+                    BLE_TRSPS_SendData(conn_hdl,strlen(buffer),(uint8_t *)&buffer);
+                }
             }
             break;
 
@@ -387,7 +405,7 @@ eMBPoll( void )
 
             /* If the request was not sent to the broadcast address we
              * return a reply. */
-            if( ucRcvAddress != MB_ADDRESS_BROADCAST )
+            if( ucRcvAddress != MB_ADDRESS_BROADCAST && ucRcvAddress != modbusAddress)
             {
                 if( eException != MB_EX_NONE )
                 {
@@ -404,6 +422,53 @@ eMBPoll( void )
                     vMBPortTimersDelay( MB_ASCII_TIMEOUT_WAIT_BEFORE_SEND_MS );
                 }                
                 eStatus = peMBFrameSendCur( ucMBAddress, ucMBFrame, usLength );
+            }
+            
+            if(ucRcvAddress == modbusAddress && eException != MB_EX_NONE  )
+            {
+                int temp = MB_PDU_DATA_OFF;
+                int i=0,reg_val;
+                switch(ucFunctionCode)
+                {
+                    case HOLDING_READ_REG:
+                       Nregs= ucMBFrame[MB_PDU_DATA_OFF]/2;
+                       while(Nregs>0)
+                       {
+                           reg_val=ucMBFrame[temp+2];
+                           sprintf(buffer2,"Holding Register %d Value: %d",i,reg_val);
+                           BLE_TRSPS_SendData(conn_hdl,strlen(buffer2),(uint8_t *)&buffer2);
+                           Nregs--;
+                           i++;
+                           temp+=2;
+                       }
+                    break;
+                    case INPUT_READ_REG:
+                       Nregs= ucMBFrame[MB_PDU_DATA_OFF]/2;
+                       while(Nregs>0)
+                       {
+                           reg_val=ucMBFrame[temp+2];
+                           sprintf(buffer2,"Input Register %d Value: %d",i,reg_val);
+                           BLE_TRSPS_SendData(conn_hdl,strlen(buffer2),(uint8_t *)&buffer2);
+                           Nregs--;
+                           i++;
+                           temp+=2;
+                       }
+                    break;
+                    case COIL_READ_REG:
+                        Nregs= ucMBFrame[MB_PDU_DATA_OFF+1];
+                        if (Nregs>0)
+                        {
+                           reg_val=ucMBFrame[temp+2];
+                           sprintf(buffer2,"Relay: On");
+                           BLE_TRSPS_SendData(conn_hdl,strlen(buffer2),(uint8_t *)&buffer2);
+                        }
+                        else
+                        {
+                           sprintf(buffer2,"Relay: Off");
+                           BLE_TRSPS_SendData(conn_hdl,strlen(buffer2),(uint8_t *)&buffer2);
+                        }
+                    break;  
+                }
             }
             break;
 
