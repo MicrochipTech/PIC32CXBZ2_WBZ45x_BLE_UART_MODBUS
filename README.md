@@ -38,7 +38,7 @@ This example application helps us to develop a request-response protocol using M
 
 The  WBZ451 Curiosity board acts as client device or server device. The WBZ451 client device is connected to the WBZ451 server devices through RS485 2 Click board as shown below.​ The WBZ451 Client and server devices act as a Bluetooth(BLE) peripheral device, which helps to connect to the mobile phone through Microchip Bluetooth Data (MBD) mobile application.  On the Client side, the MBD application (BLE Transparent UART) is used to send Modbus commands respective to the WBZ451 Server devices. On the Server side, it is used to display the Modbus data/logs to user via BLE.
 
-![Setup](Docs/Setup2.png)
+![Setup](Docs/Setup2.PNG)
 
 ### MODBUS Doctor as Client Device
 
