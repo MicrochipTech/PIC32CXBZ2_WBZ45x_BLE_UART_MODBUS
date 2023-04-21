@@ -99,7 +99,9 @@ static USHORT   usRegHoldingStart = REG_HOLDING_START;
 static USHORT   usRegHoldingBuf[REG_HOLDING_NREGS];
 static USHORT   usCoilBuf[REG_HOLDING_NREGS];
 uint16_t conn_hdl; 
+#ifdef RTU_CLIENT
 static UCHAR  mbRTUFrame[MB_SERIAL_PDU_SIZE_MAX];
+#endif
 // *****************************************************************************
 // *****************************************************************************
 // Section: Application Callback Functions
@@ -295,7 +297,7 @@ void APP_Tasks ( void )
                 {
                    SERCOM0_USART_Write((uint8_t *)"\r\n\t[BLE Data]",13);
                    SERCOM0_USART_Write((uint8_t *)&p_appMsg->msgData[BLE_DATA],appMsg->msgData[BLE_DATA_LEN]);
-#if RTU_CLIENT>0
+#ifdef RTU_CLIENT
                    BLEtoModbusData((uint8_t *)&p_appMsg->msgData[BLE_DATA],appMsg->msgData[BLE_DATA_LEN]);
 #endif
                 }

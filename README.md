@@ -83,6 +83,8 @@ The Modbus Doctor acts as the client device and the WBZ451 Curiosity board acts 
 
 - Connect the A and B lines of the RS485 2 click of the client device to the corresponding A and B lines of the server devices as shown below.
 
+![Hardware Setup](Docs/HW_Setup2.jpeg)
+
 | Note: Make sure to have common GND! |
 | --- |
 
