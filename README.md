@@ -294,7 +294,7 @@ Follow the steps provided in the link to [Build and program the application](htt
 - Coil start address: 0 (Maximum Length:8)
 - The Modbus frame format examples for the implemented functions in this application is shown in the table below.
 
--Coil Functions
+- Coil Functions
 
 |Mode|Server Address|Function code|Register Address|Number of registers|
 | :- | :- | :- | :- | :- |
