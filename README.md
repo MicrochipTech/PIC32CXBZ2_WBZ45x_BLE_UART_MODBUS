@@ -320,7 +320,7 @@ Follow the steps provided in the link to [Build and program the application](htt
 
 |Type|Mode|Server Address|Function code|Register Address|Number of registers|
 | :- | :- | :- | :- | :- | :- |
-|Input register|Read|0x04|03 E8|00 02|
+|Input register|Read|01|04|03 E8|00 02|
 
 | Note |For more details on the Modbus protocolplease go through this [link](https://www.modbus.org/docs/Modbus_Application_Protocol_V1_1b3.pdf)|
 | :- | :- |
