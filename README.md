@@ -303,12 +303,12 @@ Follow the steps provided in the link to [Build and program the application](htt
 |Coil|Write	Single Coil|01|05|00 00|00 FF|	
 
 |Type|Mode|Server Address|Function code|Register Address|Number of registers|Data|
-| :- | :- | :- | :- | :- | :- |	 :- |
-|Coil|Write	Multiple Coil|01|0F|00 00|00 02|01 00|	 
+| :- | :- | :- | :- | :- | :- | :- |
+|Coil|Write	Multiple Coil|01|01|00 00|00 02|01 00|	 
 
 |Type|Mode|Server Address|Function code|Register Address|Number of registers|
-| :- | :- | :- | :- | :- | :- |	 
-|Holding register|Read|01|03|00 00|00 05|	 	
+| :- | :- | :- | :- | :- | :- |
+|Holding register|Read|01|03|00 00|00 02|	 	
 
 |Type|Mode|Server Address|Function code|Register Address|Data|
 | :- | :- | :- | :- | :- | :- |
