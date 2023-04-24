@@ -36,13 +36,13 @@ This example application helps us to develop a request-response protocol using M
 
 ### WBZ451 curiosity board as Client Device
 
-The  WBZ451 Curiosity board acts as client device or server device. The WBZ451 client device is connected to the WBZ451 server devices through RS485 2 Click board as shown below.​ The WBZ451 Client and server devices act as a Bluetooth(BLE) peripheral device, which helps to connect to the mobile phone through Microchip Bluetooth Data (MBD) mobile application.  On the Client side, the MBD application (BLE Transparent UART) is used to send Modbus commands respective to the WBZ451 Server devices. On the Server side, it is used to display the Modbus data/logs to user via BLE.
+The  WBZ451 Curiosity board acts as Client Device or server device. The WBZ451 client device is connected to the WBZ451 server devices through RS485 2 Click board as shown below.​ The WBZ451 Client and server devices act as a Bluetooth(BLE) peripheral device, which helps to connect to the mobile phone through Microchip Bluetooth Data (MBD) mobile application.  On the Client side, the MBD application (BLE Transparent UART) is used to send Modbus commands respective to the WBZ451 Server devices. On the Server side, it is used to display the Modbus data/logs to user via BLE.
 
 ![Setup](Docs/Setup2.PNG)
 
 ### MODBUS Doctor as Client Device
 
-The Modbus Doctor acts as the client device and the WBZ451 Curiosity board acts as the server device. The client device (Modbus Doctor application) is connected to the WBZ451 interface via the RS485 2 Click board using an USB to RS485 converter.​ The WBZ451 Curiosity board also acts as a Bluetooth(BLE) peripheral device, which helps to connect to the mobile phone through Microchip Bluetooth Data (MBD) mobile application. MBD application (BLE Transparent UART) is used to display the Modbus data/logs to user via BLE. 
+The Modbus Doctor acts as the Client Device and the WBZ451 Curiosity board acts as the Server Device. The client device (Modbus Doctor application) is connected to the WBZ451 interface via the RS485 2 Click board using an USB to RS485 converter.​ The WBZ451 Curiosity board also acts as a Bluetooth(BLE) peripheral device, which helps to connect to the mobile phone through Microchip Bluetooth Data (MBD) mobile application. MBD application (BLE Transparent UART) is used to display the Modbus data/logs to user via BLE. 
 
 ![Setup](Docs/Setup.png)
 
@@ -183,7 +183,7 @@ The Modbus Doctor acts as the client device and the WBZ451 Curiosity board acts 
 - Copy the "app.c" and "app.h" files by navigating to the following path: "../firmware/src/"
 - Paste the files under source files in your project folder (...\firmware\src).
 - Copy the "app_ble" folder by navigating to the following path: (...\firmware\src)
-- Paste the files under the respecive folder in your project folder .
+- Paste the files under the respective folder in your project folder .
 
 **Step 8** - Clean and build the project. To run the project, select "Make and program device" button.
 
