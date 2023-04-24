@@ -328,10 +328,10 @@ Follow the steps provided in the link to [Build and program the application](htt
 | :- | :- | :- | :- | :- |
 |Read|01|04|03 E8|00 02|
 
+- The server devices sends the response for the request to the client device.
+
 | Note |For more details on the Modbus protocolplease go through this [link](https://www.modbus.org/docs/Modbus_Application_Protocol_V1_1b3.pdf)|
 | :- | :- |
-
-- The server devices sends the response for the request to the client device.
 
 ## 8. Related applications<a name="step8">
 
