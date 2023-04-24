@@ -288,7 +288,43 @@ Follow the steps provided in the link to [Build and program the application](htt
 
 ![Demo](Docs/mobus_bridge.gif)
 
-- In this application the Modbus frame is sent to the Client device from the MBD app through BLE UART and the Client device adds the CRC and intiates a request to the server devices. 
+- In this application the Modbus frame is sent to the Client device from the MBD app through BLE UART and the Client device adds the CRC and intiates a request to the server devices. The Modbus frame format and the register start address is illustrated below
+- Holding register start address: 1 (Maximum Length:32)
+- Input register start address: 1000(Maximum Length:64)
+- Coil start address: 0 (Maximum Length:8)
+- The Modbus frame format examples for the implemented functions in this application is shown in the table below.
+
+|Type|Mode|Server Address|Function code|Register Address|Number of registers|
+| :- | :- | :- | :- | :- | :- |
+|Coil|Read|01|01|00 00|00 02| 	 
+
+|Type|Mode|Server Address|Function code|Register Address|Data|
+| :- | :- | :- | :- | :- | :- |
+|Coil|Write	Single Coil|01|05|00 00|00 FF|	
+
+|Type|Mode|Server Address|Function code|Register Address|Number of registers|Data|
+| :- | :- | :- | :- | :- | :- |	 	 	 
+|Coil|Write	Multiple Coil|01|0F|00 00|00 02|01 00|	 
+
+|Type|Mode|Server Address|Function code|Register Address|Number of registers|
+| :- | :- | :- | :- | :- | :- |	 
+|Holding register|Read|01|03|00 00|00 05|	 	
+
+|Type|Mode|Server Address|Function code|Register Address|Data|
+| :- | :- | :- | :- | :- | :- | 	 
+|Holding register|Write	Single register|01|06|00 00|00 05|	 	 
+
+|Type|Mode|Server Address|Function code|Register Address|Number of registers|Byte Count|Data|
+| :- | :- | :- | :- | :- | :- |
+|Holding register|Write Multiple register|01|10|00 00|00 02|04|00 05 00 02|
+
+|Type|Mode|Server Address|Function code|Register Address|Number of registers|
+| :- | :- | :- | :- | :- | :- |
+|Input register|Read|0x04|03 E8|00 02|
+
+| Note |For more details on the Modbus protocolplease go through this [link](https://www.modbus.org/docs/Modbus_Application_Protocol_V1_1b3.pdf)|
+| :- | :- |
+
 - The server devices sends the response for the request to the client device.
 
 ## 8. Related applications<a name="step8">
