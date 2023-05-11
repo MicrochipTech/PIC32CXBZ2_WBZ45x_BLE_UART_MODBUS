@@ -1,4 +1,4 @@
-# PIC32CXBZ WBZ45x BLE UART MODBUS
+# PIC32CXBZ2_WBZ45x BLE UART MODBUS
 
 <img src="Docs/IoT-Made-Easy-Logo.png" width=100>
 
