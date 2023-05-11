@@ -7,7 +7,7 @@
         "version": "1.0.0",
         "displayName": "PIC32CXBZ2_WBZ45x BLE UART MODBUS",
         "projectName": "PIC32CXBZ2_WBZ45x_BLE_UART_MODBUS",
-        "shortDescription": "IOT Made Easy!-This example application helps us to develop a request-response protocol using Modbus stack. The WBZ451 curiosity board acts as a client device or server device and Bluetooth(BLE) peripheral device.",
+        "shortDescription": "IoT Made Easy!-This example application helps us to develop a request-response protocol using Modbus stack. The WBZ451 curiosity board acts as a client device or server device and Bluetooth(BLE) peripheral device.",
         "ide": {
             "name": "MPLAB X",
             "semverRange": ">=6.00"
